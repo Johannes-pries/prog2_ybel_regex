@@ -29,7 +29,7 @@ public record Token(Pattern pattern, int matchingGroup, Color color) {
      *     Token#test} method
      * @param matchingGroup the matching group to be used in highlighting
      * @param color the colour to be used for highlighting for this token
-     * @return
+     * @return a new token object
      */
     public static Token of(Pattern pattern, int matchingGroup, Color color) {
         return new Token(pattern, matchingGroup, color);
