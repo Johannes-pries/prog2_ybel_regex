@@ -1,6 +1,9 @@
 package highlighting;
 
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.Arrays;
+import java.awt.Color;
 
 /** Configure the lexer and start the demo. */
 public class Main {
@@ -52,29 +55,46 @@ public class LibgdxSetup extends Game {
      * TODO: Homework! Define the patterns for the individual tokens here (see comments).
      *
      * @return list of tokens for the syntax parts to be highlighted
+     * 
      */
     private static List<Token> setupTokens() {
-        return List.of(
+        return Arrays.asList(
                 // Strings
-                // Zeichenketten, die in '"' eingeschlossen sind
-
+                Token.of(
+                    Pattern.compile("\"(\\.|[^\\\"])*\""),
+                    Color.ORANGE
+                ),
                 // Einzelne Zeichen
-                // Zeichen, die in "'" eingeschlossen sind
-
-                // KeyWords: package, import, class, public, private, final, return, null, new
-
+                Token.of(
+                    Pattern.compile("'(\\.|[^\\'])'"),
+                    Color.RED
+                ),
+                // KeyWords
+                Token.of(
+                    Pattern.compile("\\b(package|import|class|public|private|final|return|null|new)\\b"),
+                    Color.BLUE
+                ),
                 // Annotation
-                // Fangen mit "@" an, beispielsweise "@Override"
-
+                Token.of(
+                    Pattern.compile("@\\w+"),
+                    Color.GRAY
+                ), 
                 // Einzeiliger Kommentar
-                // Fängt mit "//" an und geht bis zum Ende der Zeile
-
-                // Mehrzeiliger Kommentar
-                // Fängt mit "/*" and und bis zum nächsten "*/", kann potentiell mehrere Zeilen
-                // umfassen
-
-                // Java-Doc-Kommentar
-                // Wie ein mehrzeiliger Kommentar, beginnt aber mit "/**"
-                );
+                Token.of(
+                    Pattern.compile("\\/\\/.*$", Pattern.MULTILINE),
+                    Color.CYAN
+                ),
+                // Java-Doc
+                Token.of(
+                    Pattern.compile("\\/\\*\\*[\\s\\S]*?\\*\\/"),
+                    Color.PINK
+                ),
+                // Mehrzeilige Kommentare
+                Token.of(
+                    Pattern.compile("\\/\\*(?!\\*)[\\s\\S]*?\\*\\/"),
+                    Color.GREEN
+                )
+                
+            );
     }
 }
